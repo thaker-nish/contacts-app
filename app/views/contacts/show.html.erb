@@ -1,0 +1,15 @@
+<h1>Contact <%=@contact.id%></h1>
+<h4><%=@contact.full_name%></h4>
+<h4>Email: <%=@contact.email%></h4>
+<h4>Phone number: <%=@contact.phone_number%></h4>
+<h4>Bio: <%=@contact.bio%></h4>
+<p>Updated at: <%=@contact.friendly_updated_at%></p>
+<div>
+  <a href= <%='/contacts'%>> Go back to all contacts</a>
+</div>
+<div>
+  <a href=  '/contacts/<%=@contact.id%>/edit'> Edit this contact!</a>
+</div>
+<div>
+<%= link_to 'Destroy this contact!', "/contacts/#{@contact.id}", method: :delete %>
+</div>

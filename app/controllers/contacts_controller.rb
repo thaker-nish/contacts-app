@@ -1,42 +1,50 @@
 class ContactsController < ApplicationController
- 
-  def contacts_method
-    @contact1 = Contact.first
-    @contact1_name = @contact1.first_name + ' ' + @contact1.last_name
-    @contact1_email = @contact1.email
-    @contact1_phone_number = @contact1.phone_number
-    @contact2 = Contact.second
-    @contact2_name = @contact2.first_name + ' ' + @contact1.last_name
-    @contact2_email = @contact2.email
-    @contact2_phone_number = @contact2.phone_number
-    @contact3 = Contact.last
-    @contact3_name = @contact3.first_name + ' ' + @contact1.last_name
-    @contact3_email = @contact3.email
-    @contact3_phone_number = @contact3.phone_number
-    render 'contacts.html.erb'
+  def index
+    @contacts = Contact.all
+    render 'index.html.erb'
   end
 
-  def contact1_method
-    @contact1 = Contact.first
-    @contact1_name = @contact1.first_name + ' ' + @contact1.last_name
-    @contact1_email = @contact1.email
-    @contact1_phone_number = @contact1.phone_number
-    render 'contact1.html.erb'
+  def new
+    render 'new.html.erb'
   end
 
-  def contact2_method
-    @contact2 = Contact.second
-    @contact2_name = @contact2.first_name + ' ' + @contact2.last_name
-    @contact2_email = @contact2.email
-    @contact2_phone_number = @contact2.phone_number
-    render 'contact2.html.erb'
+  def create
+    contact = Contact.new(
+      first_name: params[:first_name],
+      middle_name: params[:middle_name],
+      last_name: params[:last_name],
+      email: params[:email],
+      phone_number: params[:phone_number],
+      bio: params[:bio])
+      contact.save
+    render 'create.html.erb'
   end
 
-  def contact3_method
-    @contact3 = Contact.last
-    @contact3_name = @contact3.first_name + ' ' + @contact3.last_name
-    @contact3_email = @contact3.email
-    @contact3_phone_number = @contact3.phone_number
-    render 'contact3.html.erb'
+  def show
+    @contact = Contact.find_by(id: params[:id])
+    render 'show.html.erb'
+  end
+
+  def edit
+    @contact = Contact.find_by(id: params[:id])
+    render 'edit.html.erb'
+  end
+
+  def update
+    @contact = Contact.find_by(id: params[:id])
+    @contact.first_name = params[:first_name]
+    @contact.middle_name = params[:middle_name]
+    @contact.last_name = params[:last_name]
+    @contact.email = params[:email]
+    @contact.phone_number = params[:phone_number]
+    @contact.bio = params[:bio]
+    @contact.save
+    render 'update.html.erb'
+  end
+
+  def destroy
+    @contact = Contact.find_by(id: params[:id])
+    @contact.destroy
+    render 'destroy.html.erb'
   end
 end
