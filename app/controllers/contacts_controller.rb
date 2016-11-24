@@ -1,7 +1,13 @@
 class ContactsController < ApplicationController
   def index
-    @contacts = Contact.all
-    render 'index.html.erb'
+    if current_user
+      @contacts = current_user.contacts
+      elsif !current_user
+        @contacts = []
+      else
+        redirect_to '/login'
+    end
+    render 'index.html.erb' 
   end
 
   def new
@@ -15,13 +21,14 @@ class ContactsController < ApplicationController
       last_name: params[:last_name],
       email: params[:email],
       phone_number: params[:phone_number],
-      bio: params[:bio])
-      contact.save
-    render 'create.html.erb'
+      bio: params[:bio],
+      user_id: current_user.id)
+    contact.save
+    redirect_to '/contacts'
   end
 
   def show
-    @contact = Contact.find_by(id: params[:id])
+      @contact = Contact.find_by(id: params[:id])
     render 'show.html.erb'
   end
 
@@ -39,7 +46,7 @@ class ContactsController < ApplicationController
     @contact.phone_number = params[:phone_number]
     @contact.bio = params[:bio]
     @contact.save
-    render 'update.html.erb'
+    redirect_to '/contacts/#{@contact.id}/show'
   end
 
   def destroy

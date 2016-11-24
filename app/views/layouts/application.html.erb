@@ -17,7 +17,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/contacts">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
+        <% if current_user %>
+        <li><a href="/contacts/new">Create contact</a></li>
+        <%else%>
+        <li></li>
+        <%end%>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -38,9 +42,13 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+      <% if current_user %>
+        <li><a href="#">Welcome, <%=current_user.name%></a></li>
+        <li><a href="logout">Logout</a></li>
+      <%else%>
         <li><a href="/signup">Signup</a></li>
         <li><a href="login">Login</a></li>
-        <li><a href="logout">Logout</a></li>
+        <%end%>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
